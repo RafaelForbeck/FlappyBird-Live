@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://b5oj5ijjbl6gf"]
+
+[ext_resource type="Texture2D" uid="uid://dy4e1cef51s0g" path="res://sprites/redbird-downflap.png" id="1_lwh0m"]
+[ext_resource type="Script" uid="uid://b5v34jl0lq5nj" path="res://scripts/bird.gd" id="1_qo85j"]
+[ext_resource type="Texture2D" uid="uid://c5o4lbqcenu8h" path="res://sprites/redbird-midflap.png" id="2_qo85j"]
+[ext_resource type="Texture2D" uid="uid://bpyjv8t1mvssu" path="res://sprites/redbird-upflap.png" id="3_abokc"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_516r7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lwh0m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_qo85j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_abokc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_qo85j")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_feapl"]
+radius = 12.0
+
+[node name="Bird" type="CharacterBody2D"]
+z_index = 10
+script = ExtResource("1_qo85j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_516r7")
+animation = &"fly"
+autoplay = "fly"
+frame_progress = 0.970098
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_feapl")
+debug_color = Color(0, 0.65098, 0.0627451, 0.835294)

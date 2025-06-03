@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://bmr7n2q86f2xx"]
+
+[ext_resource type="Texture2D" uid="uid://c505e5fc1rh7i" path="res://sprites/background-day.png" id="1_dbls1"]
+[ext_resource type="PackedScene" uid="uid://b5oj5ijjbl6gf" path="res://entities/bird.tscn" id="2_33cqm"]
+[ext_resource type="Texture2D" uid="uid://421ofsy0xuc8" path="res://sprites/base.png" id="3_33cqm"]
+[ext_resource type="Script" uid="uid://6on8eqrsap87" path="res://scripts/ground.gd" id="4_xwcet"]
+[ext_resource type="Script" uid="uid://ceknfe872lpqo" path="res://scripts/pipe_spawner.gd" id="5_p1ry8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xwcet"]
+size = Vector2(336, 112)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_33cqm"]
+size = Vector2(312, 33)
+
+[node name="Game" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("1_dbls1")
+centered = false
+
+[node name="Bird" parent="." instance=ExtResource("2_33cqm")]
+position = Vector2(103, 248)
+
+[node name="Ground" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Ground"]
+position = Vector2(107, 452)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground/StaticBody2D"]
+position = Vector2(61, 4)
+shape = SubResource("RectangleShape2D_xwcet")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ground"]
+z_index = 1
+position = Vector2(0, 400)
+texture = ExtResource("3_33cqm")
+centered = false
+script = ExtResource("4_xwcet")
+
+[node name="TopLimit" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopLimit"]
+position = Vector2(146, -20)
+shape = SubResource("RectangleShape2D_33cqm")
+
+[node name="PipeSpawner" type="Node2D" parent="."]
+position = Vector2(362, 207)
+script = ExtResource("5_p1ry8")
+
+[node name="Timer" type="Timer" parent="PipeSpawner"]
+autostart = true
+
+[connection signal="timeout" from="PipeSpawner/Timer" to="PipeSpawner" method="_on_timer_timeout"]
