@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://b5oj5ijjbl6gf"]
+[gd_scene load_steps=8 format=3 uid="uid://b5oj5ijjbl6gf"]
 
 [ext_resource type="Texture2D" uid="uid://dy4e1cef51s0g" path="res://sprites/redbird-downflap.png" id="1_lwh0m"]
 [ext_resource type="Script" uid="uid://b5v34jl0lq5nj" path="res://scripts/bird.gd" id="1_qo85j"]
@@ -23,9 +23,20 @@ animations = [{
 "loop": true,
 "name": &"fly",
 "speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_abokc")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_feapl"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qo85j"]
 radius = 12.0
 
 [node name="Bird" type="CharacterBody2D"]
@@ -34,10 +45,18 @@ script = ExtResource("1_qo85j")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_516r7")
-animation = &"fly"
+animation = &"hurt"
 autoplay = "fly"
-frame_progress = 0.970098
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CircleShape2D_feapl")
-debug_color = Color(0, 0.65098, 0.0627451, 0.835294)
+debug_color = Color(0, 0.65098, 0.0627451, 0.411765)
+
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hitbox"]
+visible = false
+shape = SubResource("CircleShape2D_qo85j")
+
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
